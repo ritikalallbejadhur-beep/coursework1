@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxStay Apartments | Book Your Perfect Stay</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --success-color: #27ae60;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding-top: 76px; /* For fixed navbar */
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+        
+        .apartment-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        
+        .apartment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .apartment-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .price-tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        .amenity-icon {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+        
+        .feature-box {
+            padding: 30px 20px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: var(--light-color);
+            height: 100%;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .booking-form-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-booking {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .btn-booking:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 60px;
+        }
+        
+        .booking-modal-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .availability-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .available {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .limited {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .carousel-control-prev, .carousel-control-next {
+            width: 5%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-building me-2"></i>LuxStay Apartments
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#apartments">Apartments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Why Choose Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Find Your Perfect Stay</h1>
+                    <p class="lead mb-4">Discover comfortable, fully-furnished apartments in prime locations. Book your next getaway with ease and confidence.</p>
+                    <a href="#apartments" class="btn btn-primary btn-lg">Browse Apartments</a>
+                </div>
+                <div class="col-lg-6">
+                    <!-- Booking Form -->
+                    <div class="booking-form-container mt-4 mt-lg-0">
+                        <h3 class="mb-4">Check Availability</h3>
+                        <form id="availabilityForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="checkIn" class="form-label">Check-in Date</label>
+                                    <input type="date" class="form-control" id="checkIn" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="checkOut" class="form-label">Check-out Date</label>
+                                    <input type="date" class="form-control" id="checkOut" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="guests" class="form-label">Guests</label>
+                                    <select class="form-select" id="guests">
+                                        <option value="1">1 Guest</option>
+                                        <option value="2" selected>2 Guests</option>
+                                        <option value="3">3 Guests</option>
+                                        <option value="4">4 Guests</option>
+                                        <option value="5+">5+ Guests</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="location" class="form-label">Location</label>
+                                    <select class="form-select" id="location">
+                                        <option value="all">All Locations</option>
+                                        <option value="downtown">Downtown</option>
+                                        <option value="suburbs">Suburbs</option>
+                                        <option value="beachfront">Beachfront</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <button type="submit" class="btn btn-booking w-100">Check Availability</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Apartments Section -->
+    <section id="apartments" class="py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col text-center">
+                    <h2 class="fw-bold">Featured Apartments</h2>
+                    <p class="text-muted">Choose from our selection of premium apartments</p>
+                </div>
+            </div>
+            
+            <div class="row" id="apartmentsContainer">
+                <!-- Apartments will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col text-center">
+                    <h2 class="fw-bold">Why Choose LuxStay</h2>
+                    <p class="text-muted">We provide the best experience for your stay</p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="bi bi-shield-check feature-icon"></i>
+                        <h4>Safe & Secure</h4>
+                        <p>All our apartments are in secure buildings with 24/7 surveillance and secure access.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="bi bi-wifi feature-icon"></i>
+                        <h4>High-Speed WiFi</h4>
+                        <p>Stay connected with high-speed internet available in all our apartments.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-box">
+                        <i class="bi bi-geo-alt feature-icon"></i>
+                        <h4>Prime Locations</h4>
+                        <p>Our apartments are located in the best neighborhoods close to attractions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">LuxStay Apartments</h5>
+                    <p>Providing premium apartment rentals with exceptional service since 2010.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Contact Info</h5>
+                    <p><i class="bi bi-geo-alt me-2"></i> 123 Main Street, Cityville</p>
+                    <p><i class="bi bi-telephone me-2"></i> (555) 123-4567</p>
+                    <p><i class="bi bi-envelope me-2"></i> info@luxstay.com</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3">Newsletter</h5>
+                    <p>Subscribe to get special offers and updates</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your Email" id="newsletterEmail">
+                        <button class="btn btn-primary" type="button" id="subscribeBtn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="row">
+                <div class="col text-center">
+                    <p>&copy; 2023 LuxStay Apartments. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalApartmentTitle">Book Apartment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img id="modalApartmentImage" src="" class="booking-modal-img" alt="Apartment">
+                            <div class="mt-3">
+                                <h6>Apartment Features</h6>
+                                <div id="modalApartmentFeatures"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 id="modalApartmentName"></h5>
+                            <p id="modalApartmentDescription"></p>
+                            <p><strong>Location:</strong> <span id="modalApartmentLocation"></span></p>
+                            <p><strong>Price:</strong> <span id="modalApartmentPrice" class="text-primary fw-bold"></span> per night</p>
+                            <hr>
+                            <h6>Booking Details</h6>
+                            <form id="bookingForm">
+                                <div class="mb-3">
+                                    <label for="bookingCheckIn" class="form-label">Check-in Date</label>
+                                    <input type="date" class="form-control" id="bookingCheckIn" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookingCheckOut" class="form-label">Check-out Date</label>
+                                    <input type="date" class="form-control" id="bookingCheckOut" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookingGuests" class="form-label">Number of Guests</label>
+                                    <input type="number" class="form-control" id="bookingGuests" min="1" max="6" value="2" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookingName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="bookingName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookingEmail" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="bookingEmail" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-booking">Confirm Booking</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Apartment data
+        const apartments = [
+            {
+                id: 1,
+                name: "Modern Downtown Loft",
+                description: "A stylish loft in the heart of downtown with stunning city views.",
+                location: "Downtown",
+                price: 149,
+                image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+                features: ["2 Guests", "1 Bedroom", "1 Bath", "WiFi", "Kitchen"],
+                availability: "available"
+            },
+            {
+                id: 2,
+                name: "Beachfront Paradise",
+                description: "Beautiful apartment with direct beach access and ocean views.",
+                location: "Beachfront",
+                price: 199,
+                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+                features: ["4 Guests", "2 Bedrooms", "2 Baths", "WiFi", "Kitchen", "Pool"],
+                availability: "limited"
+            },
+            {
+                id: 3,
+                name: "Cozy Suburban Retreat",
+                description: "Quiet and comfortable apartment in a peaceful suburban neighborhood.",
+                location: "Suburbs",
+                price: 119,
+                image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+                features: ["2 Guests", "1 Bedroom", "1 Bath", "WiFi", "Kitchen", "Parking"],
+                availability: "available"
+            },
+            {
+                id: 4,
+                name: "Luxury Penthouse Suite",
+                description: "Top-floor penthouse with panoramic views and premium amenities.",
+                location: "Downtown",
+                price: 299,
+                image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1080&q=80",
+                features: ["6 Guests", "3 Bedrooms", "3 Baths", "WiFi", "Kitchen", "Pool", "Gym"],
+                availability: "limited"
+            }
+        ];
+
+        // DOM elements
+        const apartmentsContainer = document.getElementById('apartmentsContainer');
+        const availabilityForm = document.getElementById('availabilityForm');
+        const bookingForm = document.getElementById('bookingForm');
+        const bookingModal = new bootstrap.Modal(document.getElementById('bookingModal'));
+        const subscribeBtn = document.getElementById('subscribeBtn');
+        const newsletterEmail = document.getElementById('newsletterEmail');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            displayApartments(apartments);
+            setupEventListeners();
+            setDefaultDates();
+        });
+
+        // Display apartments on the page
+        function displayApartments(apartmentsArray) {
+            apartmentsContainer.innerHTML = '';
+            
+            apartmentsArray.forEach(apartment => {
+                const availabilityClass = apartment.availability === 'available' ? 'available' : 'limited';
+                const availabilityText = apartment.availability === 'available' ? 'Available' : 'Limited';
+                
+                const apartmentCard = `
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card apartment-card h-100">
+                            <div class="position-relative">
+                                <img src="${apartment.image}" class="apartment-img" alt="${apartment.name}">
+                                <span class="availability-badge ${availabilityClass}">${availabilityText}</span>
+                                <span class="price-tag">$${apartment.price}/night</span>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">${apartment.name}</h5>
+                                <p class="card-text text-muted">${apartment.description}</p>
+                                <div class="mb-3">
+                                    ${apartment.features.map(feature => 
+                                        `<span class="badge bg-light text-dark me-1 mb-1">${feature}</span>`
+                                    ).join('')}
+                                </div>
+                                <p><i class="bi bi-geo-alt amenity-icon"></i> ${apartment.location}</p>
+                                <button class="btn btn-booking w-100 book-btn" data-id="${apartment.id}">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                apartmentsContainer.innerHTML += apartmentCard;
+            });
+            
+            // Add event listeners to book buttons
+            document.querySelectorAll('.book-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const apartmentId = parseInt(this.getAttribute('data-id'));
+                    openBookingModal(apartmentId);
+                });
+            });
+        }
+
+        // Open booking modal with apartment details
+        function openBookingModal(apartmentId) {
+            const apartment = apartments.find(apt => apt.id === apartmentId);
+            
+            if (!apartment) return;
+            
+            // Set modal content
+            document.getElementById('modalApartmentTitle').textContent = `Book ${apartment.name}`;
+            document.getElementById('modalApartmentName').textContent = apartment.name;
+            document.getElementById('modalApartmentImage').src = apartment.image;
+            document.getElementById('modalApartmentDescription').textContent = apartment.description;
+            document.getElementById('modalApartmentLocation').textContent = apartment.location;
+            document.getElementById('modalApartmentPrice').textContent = `$${apartment.price}`;
+            
+            // Set features
+            const featuresContainer = document.getElementById('modalApartmentFeatures');
+            featuresContainer.innerHTML = '';
+            apartment.features.forEach(feature => {
+                const featureElement = document.createElement('div');
+                featureElement.innerHTML = `<i class="bi bi-check-circle-fill text-success me-2"></i> ${feature}`;
+                featuresContainer.appendChild(featureElement);
+            });
+            
+            // Set default dates in booking form
+            const today = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+            
+            document.getElementById('bookingCheckIn').value = today;
+            document.getElementById('bookingCheckOut').value = tomorrowStr;
+            
+            // Show modal
+            bookingModal.show();
+        }
+
+        // Set default dates in availability form
+        function setDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            const nextWeek = new Date();
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            const nextWeekStr = nextWeek.toISOString().split('T')[0];
+            
+            document.getElementById('checkIn').value = today;
+            document.getElementById('checkOut').value = nextWeekStr;
+            
+            // Set min dates to today
+            document.getElementById('checkIn').min = today;
+            document.getElementById('checkOut').min = today;
+            document.getElementById('bookingCheckIn').min = today;
+            document.getElementById('bookingCheckOut').min = today;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Availability form submission
+            availabilityForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const checkIn = document.getElementById('checkIn').value;
+                const checkOut = document.getElementById('checkOut').value;
+                const guests = document.getElementById('guests').value;
+                const location = document.getElementById('location').value;
+                
+                // Simple filter logic
+                let filteredApartments = apartments;
+                
+                if (location !== 'all') {
+                    filteredApartments = filteredApartments.filter(apartment => 
+                        apartment.location.toLowerCase() === location.toLowerCase()
+                    );
+                }
+                
+                // Filter by capacity
+                filteredApartments = filteredApartments.filter(apartment => {
+                    const maxGuests = parseInt(apartment.features[0]);
+                    return maxGuests >= parseInt(guests);
+                });
+                
+                // Display filtered results
+                displayApartments(filteredApartments);
+                
+                // Show message if no results
+                if (filteredApartments.length === 0) {
+                    apartmentsContainer.innerHTML = `
+                        <div class="col-12 text-center py-5">
+                            <h4>No apartments match your criteria</h4>
+                            <p>Try adjusting your search filters</p>
+                            <button class="btn btn-primary" id="resetFilters">Reset Filters</button>
+                        </div>
+                    `;
+                    
+                    document.getElementById('resetFilters').addEventListener('click', function() {
+                        displayApartments(apartments);
+                        availabilityForm.reset();
+                        setDefaultDates();
+                    });
+                }
+                
+                // Scroll to apartments section
+                document.getElementById('apartments').scrollIntoView({behavior: 'smooth'});
+            });
+            
+            // Booking form submission
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const bookingData = {
+                    apartment: document.getElementById('modalApartmentName').textContent,
+                    checkIn: document.getElementById('bookingCheckIn').value,
+                    checkOut: document.getElementById('bookingCheckOut').value,
+                    guests: document.getElementById('bookingGuests').value,
+                    name: document.getElementById('bookingName').value,
+                    email: document.getElementById('bookingEmail').value
+                };
+                
+                // In a real app, you would send this data to a server
+                // For now, we'll just show a confirmation message
+                bookingModal.hide();
+                
+                alert(`Thank you for your booking, ${bookingData.name}!\n\n` +
+                      `We have received your request to book ${bookingData.apartment} from ` +
+                      `${bookingData.checkIn} to ${bookingData.checkOut} for ${bookingData.guests} guests.\n\n` +
+                      `A confirmation email has been sent to ${bookingData.email}.`);
+                
+                // Reset the form
+                bookingForm.reset();
+            });
+            
+            // Newsletter subscription
+            subscribeBtn.addEventListener('click', function() {
+                const email = newsletterEmail.value;
+                
+                if (!email || !email.includes('@')) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                // In a real app, you would send this to a server
+                newsletterEmail.value = '';
+                alert('Thank you for subscribing to our newsletter!');
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active nav link
+                        document.querySelectorAll('.nav-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
